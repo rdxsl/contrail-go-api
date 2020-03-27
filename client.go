@@ -84,6 +84,18 @@ var (
 	typeMap TypeMap
 )
 
+// NewClientWithHTTP allocates and initializes a Contrail API client.
+//
+// NOTE(jehwang): Exposed new method to allow us to specify an http client
+// with a proper timeout.
+func NewClientWithHTTP(server string, port int, httpClient *http.Client) *Client {
+	client := NewClient(server, port)
+	if httpClient != nil {
+		client.httpClient = httpClient
+	}
+	return client
+}
+
 // NewClient allocates and initializes a Contrail API client.
 //
 func NewClient(server string, port int) *Client {
